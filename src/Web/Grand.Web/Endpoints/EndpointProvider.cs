@@ -538,6 +538,16 @@ namespace Grand.Web.Endpoints
                             $"{pattern}cart/",
                             new { controller = "ShoppingCart", action = "Cart" });
 
+            //shopping cart summary
+            endpointRouteBuilder.MapControllerRoute("ShoppingCartSummary",
+                            $"{pattern}cart/summary/",
+                            new { controller = "ShoppingCart", action = "CartSummary" });
+
+            //shopping cart total
+            endpointRouteBuilder.MapControllerRoute("ShoppingCartTotal",
+                            $"{pattern}cart/total/",
+                            new { controller = "ShoppingCart", action = "CartTotal" });
+
             //Continue shopping
             endpointRouteBuilder.MapControllerRoute("ContinueShopping",
                             $"{pattern}cart/continueshopping/",

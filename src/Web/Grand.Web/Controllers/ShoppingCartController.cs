@@ -283,6 +283,40 @@ namespace Grand.Web.Controllers
             return View(model);
         }
 
+        [DenySystemAccount]
+        public async Task<IActionResult> CartSummary()
+        {
+            var cart = await _shoppingCartService.GetShoppingCart(_workContext.CurrentStore.Id, ShoppingCartType.ShoppingCart, ShoppingCartType.Auctions);
+
+            var model = await _mediator.Send(new GetShoppingCart() {
+                Cart = cart,
+                IsEditable = false,
+                Customer = _workContext.CurrentCustomer,
+                Currency = _workContext.WorkingCurrency,
+                Language = _workContext.WorkingLanguage,
+                Store = _workContext.CurrentStore,
+                TaxDisplayType = _workContext.TaxDisplayType
+            });
+
+            return View(model);
+        }
+
+        [DenySystemAccount]
+        public async Task<IActionResult> CartTotal()
+        {
+            var cart = await _shoppingCartService.GetShoppingCart(_workContext.CurrentStore.Id, ShoppingCartType.ShoppingCart, ShoppingCartType.Auctions);
+
+            var model = await _mediator.Send(new GetOrderTotals() {
+                Cart = cart,
+                Store = _workContext.CurrentStore,
+                Currency = _workContext.WorkingCurrency,
+                Customer = _workContext.CurrentCustomer,
+                Language = _workContext.WorkingLanguage,
+                TaxDisplayType = _workContext.TaxDisplayType
+            });
+            return View(model);
+        }
+
         [AutoValidateAntiforgeryToken]
         [DenySystemAccount]
         [HttpPost]
